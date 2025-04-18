@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   postgres:
-    image: postgres:latest
+    image: postgres:16
     container_name: postgres-container
     restart: always
     environment:
@@ -12,7 +12,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
 
   app:
     build: .
@@ -27,4 +27,4 @@ services:
       SPRING_DATASOURCE_PASSWORD: root
 
 volumes:
-  pgdata:
+  postgres_data:
