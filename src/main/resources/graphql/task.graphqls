@@ -1,0 +1,50 @@
+# --- ENUMS ---
+enum TaskStatus {
+    TODO
+    IN_PROGRESS
+    COMPLETED
+}
+
+enum TaskPriority {
+    LOW
+    MEDIUM
+    HIGH
+}
+
+# --- TASK TYPE ---
+type Task {
+    id: ID!
+    title: String!
+    description: String
+    status: TaskStatus!
+    priority: TaskPriority!
+    dueDate: String
+    createdAt: String!
+    updatedAt: String!
+    assignedUser: User
+    createdBy: User
+}
+
+# --- INPUT TYPE FOR CREATE/UPDATE ---
+input TaskInput {
+    title: String!
+    desc: String
+    status: TaskStatus!
+    priority: TaskPriority!
+    dueDate: String
+    createdBy: ID!
+    assignedUserId: ID
+}
+
+# --- QUERIES ---
+extend type Query {
+    getTaskById(id: ID!): Task
+    getAllTasks: [Task!]!
+}
+
+# --- MUTATIONS ---
+extend type Mutation {
+    createTask(taskInput: TaskInput!): Task
+    updateTask(id: ID!, taskInput: TaskInput!): Task
+    deleteTask(id: ID!): String
+}

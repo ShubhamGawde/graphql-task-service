@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -18,7 +19,7 @@ public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(nullable = false)
     private String title;
@@ -34,7 +35,7 @@ public class Task {
     @Column(nullable = false)
     private TaskPriority priority;  // Enum: LOW, MEDIUM, HIGH
 
-    private LocalDateTime dueDate;
+    private LocalDate dueDate;
 
     @Column(name = "createdAt", nullable = false, updatable = false, insertable = false)
     private LocalDateTime createdAt;  // Auto-set by SQL Server
@@ -45,4 +46,9 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "assigned_user_id")
     private User assignedUser;
+
+    @ManyToOne
+    @JoinColumn(name = "created_by_user_id")
+    private User createdBy;
+
 }

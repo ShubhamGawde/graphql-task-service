@@ -1,5 +1,6 @@
 package com.taskmanagement.taskservice.exceptionhandler;
 
+import com.taskmanagement.taskservice.customexception.TaskNotFoundException;
 import com.taskmanagement.taskservice.customexception.UserNotFoundException;
 import graphql.GraphQLError;
 import graphql.GraphqlErrorBuilder;
@@ -12,6 +13,14 @@ public class GlobalExceptionHandler {
 
     @GraphQlExceptionHandler(UserNotFoundException.class)
     public GraphQLError handleUserNotFoundException(UserNotFoundException ex) {
+        return GraphqlErrorBuilder.newError()
+                .message(ex.getMessage())
+                .errorType(ErrorType.NOT_FOUND)
+                .build();
+    }
+
+    @GraphQlExceptionHandler(TaskNotFoundException.class)
+    public GraphQLError handleTaskNotFoundException(TaskNotFoundException ex) {
         return GraphqlErrorBuilder.newError()
                 .message(ex.getMessage())
                 .errorType(ErrorType.NOT_FOUND)

@@ -43,6 +43,6 @@ public class User {
     @Column(updatable = true, nullable = false)
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "assignedUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "assignedUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Task> tasks;
 }
