@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -37,11 +39,13 @@ public class Task {
 
     private LocalDate dueDate;
 
-    @Column(name = "createdAt", nullable = false, updatable = false, insertable = false)
+    @CreationTimestamp
+    @Column(updatable = false, nullable = false)
     private LocalDateTime createdAt;  // Auto-set by SQL Server
 
-    @Column(name = "updatedAt", nullable = false, insertable = false)
-    private LocalDateTime updatedAt;  // Auto-updated by SQL Server trigger
+    @UpdateTimestamp
+    @Column(name = "updatedAt", nullable = false)
+    private LocalDateTime updatedAt;
 
     @ManyToOne
     @JoinColumn(name = "assigned_user_id")

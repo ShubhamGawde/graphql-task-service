@@ -64,7 +64,29 @@ public class TaskGraphqlController {
   }
 
   @MutationMapping
-    public Task updateTask(@Argument("id") Integer tId, TaskInput taskInput){
-      return null;
+    public Task updateTask(@Argument("id") Integer tId, @Argument("taskInput") TaskInput taskInput){
+
+      User assignedUser =
+              !Utils.nullOrEmptyOrZero(taskInput.getAssignedUserId())
+                      ? this.userService.getUserById(taskInput.getAssignedUserId())
+                      : null;
+
+      User createdBy =
+              !Utils.nullOrEmptyOrZero(taskInput.getCreatedBy())
+                      ? this.userService.getUserById(taskInput.getCreatedBy())
+                      : null;
+
+      LocalDate dueDate = LocalDate.parse(taskInput.getDueDate(), DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+
+      Task task = new Task();
+      task.setTitle(taskInput.getTitle());
+      task.setDescription(taskInput.getDescription());
+      task.setStatus(taskInput.getStatus());
+      task.setPriority(taskInput.getPriority());
+      task.setCreatedBy(createdBy);
+      task.setAssignedUser(assignedUser);
+      task.setDueDate(dueDate);
+
+      return this.taskService.updateTask(tId, task);
   }
 }

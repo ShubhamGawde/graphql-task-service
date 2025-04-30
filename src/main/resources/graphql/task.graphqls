@@ -28,7 +28,7 @@ type Task {
 # --- INPUT TYPE FOR CREATE/UPDATE ---
 input TaskInput {
     title: String!
-    desc: String
+    description: String
     status: TaskStatus!
     priority: TaskPriority!
     dueDate: String
